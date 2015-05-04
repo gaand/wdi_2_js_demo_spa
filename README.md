@@ -1,28 +1,47 @@
 ![General Assembly Logo](http://i.imgur.com/ke8USTq.png)
 
-# Javascript Assignment Name
+# Javascript Single Page App (SPA)
 
 ## Objectives
-
-By the end of this, students should be able to:
-
-- Objective 1
-- Objective 2
-- Objective 3
+- Create a namespace for the application.
+- Use an Immediately Invoked Function Expression to implement encapsulation/privacy.
+- Implement the Module Pattern.
 
 ## Instructions
 
-Include explict step-by-step instructions about the goals of the assignment, and how to run the code.
+1. Fork and clone.
+2. `npm install`.   
+	 *This will install javascript packages needed during development like grunt, jasmine, etc.*
+3. `bower install`.  
+	*This will install javascript packages and libraries needed for the client side code, that is, in the page itself. This app will need jquery.*
 
-Make sure to wrap section of code in appropriate markdown like `ls -al`, and denote the language as below for longer sections:
+
+## Review: Closures
 
 ```javascript
-function(){
-  var x = 2
-  var y = 3
-  return x + y
-};
+// Because this function returns another function that has access to the
+// "private" var i, the returned function is, effectively, "privileged."
 
+function makeCounter() {
+  // `i` is only accessible inside `makeCounter`.
+  var i = 0;
+
+  return function() {
+    console.log( ++i );
+  };
+}
+
+// Note that `counter` and `counter2` each have their own scoped `i`.
+
+var counter = makeCounter();
+counter(); // logs: 1
+counter(); // logs: 2
+
+var counter2 = makeCounter();
+counter2(); // logs: 1
+counter2(); // logs: 2
+
+i; // ReferenceError: i is not defined (it only exists inside makeCounter)
 ```
 
 ## Bonus (Optional Section)
