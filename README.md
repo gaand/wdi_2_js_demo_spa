@@ -8,6 +8,14 @@
 - Use an Immediately Invoked Function Expression **IIFE** to implement encapsulation/privacy.
 - Implement the Module Pattern.
 
+## Instructions
+
+1. Fork and clone.
+2. `npm install`.   
+	 *This will install javascript packages needed during development like grunt, jasmine, etc.*
+3. `bower install`.  
+	*This will install javascript packages and libraries needed for the client side code, that is, in the page itself. This app will need jquery.*
+
 ## Overview
 
 As a Spotify employee I'm tasked with the implimentation of a Song Playlist. This will run in the browser and at some point in time, *in the future*, it will allow Spotify users the ability to manage, organize and play their songs. 
@@ -15,8 +23,6 @@ As a Spotify employee I'm tasked with the implimentation of a Song Playlist. Thi
 As explained to the developer, *Initially, the user should be able to see a list of their songs and manage them.* 
 
 This is just a first step in a the construction of a larger project so we're **not** going to think about user registration, login or even sync'ng the list with the Spotify backend servers. *Lot's of stuff we're not doing yet.*
-
-
 
 
 ## Step 1: Create User Stories.
@@ -96,14 +102,27 @@ Song List (Playlist):
 
 Let's take a snapshot of this these domain objects, their properties and their relationship/s.
 
-## Instructions
 
-1. Fork and clone.
-2. `npm install`.   
-	 *This will install javascript packages needed during development like grunt, jasmine, etc.*
-3. `bower install`.  
-	*This will install javascript packages and libraries needed for the client side code, that is, in the page itself. This app will need jquery.*
+## Lab
 
+Create User Stories and Domain Objects/Models for a Todo application. 
+
+As explained to the developer, *Initially, the user should be able to see a list of their tasks and manage them.* 
+
+Each task should have a title, description, id, (must be unique) and a status(reviewed, in-progress or done).
+
+A user should be able to add and remove todo items to the todo list. 
+
+Work in groups of two or three to create these users stories. Save these stories in each group member repos as todo_user_stories.txt.
+
+Make sure you assign priority (1-5), difficulty level (1,2, 4 or 8) and which 2 week iteration it will be done in, typically 1
+
+
+## Step 3: Implementation
+
+Now that we've done a some planning and software design work we're going to write some code and make it happen. 
+
+*Note that many dive into coding to fast. Much teeth gnashing is a special part of hell for those who do. They typically regret coding before structured thinking.*
 
 ### User Story 1 (Implementation)
 As a user when I go to the main page I should see a list of Songs.
@@ -180,7 +199,7 @@ One of the problems that we see is that the names of global variables inside of 
 
 This is called *name collision* and we want to avoid it. 
 
-We want to avoid this by **severely** limiting the number of global variable we create in our app. We're typicall only going to create **one** global variable.
+We want to avoid this by **severely** limiting the number of global variables we create in our app. We're typically create only **one** global variable.
 
 In the above code we declare **one** global variable, `Spotify`, all the code we write in our app, (functions, object literals, ...), will be prefixed by this **one** global variable that is a object literal.
 
@@ -204,6 +223,9 @@ Notice that we used an object literal when we need **ONLY ONE** instances of som
 
 In this case the app needs **ONLY ONE** Playlist. At least, for now.
 
+## Lab
+
+Create a Todo App. It will have a list of items/tasks. You'll 
 ### User Story 2 (Implementation)
 ## Review: Closures
 
