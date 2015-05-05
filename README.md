@@ -305,6 +305,87 @@ I'm still not happy about some of this. Specifically, that in the playlist we ex
 
 And generating a Song id should be a responsibility of the Song class. Why should the Playlist know that a Song needs an id? It shouldn't.
 
+### Encapsulation with Closure and IIFE.
+
+Remember that when we invoke a function that function will have all it's variables and inner functions contained within that function's **scope**. 
+
+#### Encapsulation
+We can hide, **encapsulate**, that function's variables and inner functions from all client code outside of that function. Another words, we are making these inner functions and variables **private**.
+
+#### Closure
+We can also return an inner function or variable defined in that function. And that returned inner function still has access to all that function's **scope**. This ability or behavior is called **closure**.
+
+#### Immediate Invoked Function Expression(IIFE)
+
+Let's look at how an IIFE can implement **encapsulation** and **closure**.
+
+**Change app/js/play_list.js**
+
+```javascript
+var Spotify = Spotify || {};
+
+Spotify.PlayList = function(){
+  // private songs list 
+  var _songs = [];
+
+  // private method, only used by _init method
+  function _getSongs(){
+    _songs.push(new Spotify.Song("Lost Cause", 183, 1.99,'Beck'));
+    _songs.push(new Spotify.Song("Teenage spirit", 243, 1.09,'Nivarna'));
+    _songs.push(new Spotify.Song("Whole lotta love", 203, 2.99,'Zeppelin'));
+    _songs.push(new Spotify.Song("Mother", 605, 1.49, 'Pink Floyd'));
+  };
+
+  function _init(appPlayListElement){
+    $playListElement = appPlayListElement;
+    _getSongs(); // call private _getSongs method
+  };
+
+  // Render each song into HTML
+  function _render(){
+    var id = 1; 
+    // song list is now private.
+    _songs.forEach(function(song){
+     song.render($playListElement, id);
+     id++;
+    }); 
+  };
+
+  return {
+    init: _init,
+    render: _render
+  }
+};
+```
+
+Better, know we are keeping our song list and getSongs method private. Clients don't need and can't invoke getSongs. And they should not be able to change how the internal song list is implemented. Good.
+
+**Change app/js/app.js**
+
+```javascript
+$(document).ready(function(){
+  var pl = Spotify.PlayList()
+  pl.init($('#spotify-songs'));
+  pl.render();
+});
+```
+
+See no can to getSongs or access to the Playlist internal representation of the song list. Good!
+
+But, wait look at that Spotify.Playlist() thingy. Huh, whats that for? We'll we have to actually invoke the function to get the object representing the playlist. 
+
+Let's get around that using an **IIFE**.
+
+It would be nice if we could **Immediate Invoke** the function used to get playlist. Lets try this.
+
+```
+...
+
+
+...
+```
+
+
 ## Review: Closures
 
 Create a file app/scripts

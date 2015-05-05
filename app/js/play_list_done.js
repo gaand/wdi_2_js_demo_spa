@@ -18,13 +18,14 @@ Spotify.PlayList = (function(){
     // Will eventually be a remote call to get songs from the server 
     _getSongs();
   };
-
+  
   // Render each song into HTML
-  function _render(){
+  _render: function(){
+    var id = 1; 
     _songs.forEach(function(song){
-      song.render($playListElement);
+     song.render($playListElement, id);
+     id++;
     }); 
-  }; 
 
   // Dummy function that creates a initial set of songs.
   // We'll get these songs from the backend server later
