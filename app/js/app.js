@@ -1,6 +1,3 @@
 $(document).ready(function(){
-  Spotify.PlayList.init($('#spotify-songs'));
-  Spotify.PlayList.render();
+  console.log("Time to build a Playlist for Spotify");
 });
-
-
