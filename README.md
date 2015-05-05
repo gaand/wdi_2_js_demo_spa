@@ -3,9 +3,9 @@
 # Javascript Single Page App (SPA)
 
 ## Objectives
-- Transform a description of a project to a set of **User Stories**.
+- Transform a description of a project to a set of **User Stories** and **Domain Objects/Models**.
 - Create a **Namespace** for the application.
-- Use an Immediately Invoked Function Expression **IIFE** to implement encapsulation/privacy.
+- Use an Immediately Invoked Function Expression(**IIFE**) to implement encapsulation/privacy.
 - Implement the Module Pattern.
 
 ## Instructions
@@ -42,38 +42,42 @@ It's a task, and we work with stakeholders to create these stories/tasks. Each s
 
 Creating these Stories is a **part** of an ongoing conversation we, as developers, are having with stakeholders. We'll be checking in with stakeholders all the time to make sure we are in sync about exactly what it is we're building!
 
-Let's repeat the task as stated by stated by the Spotify business analyst, he's the *stakeholder*.
+Let's repeat the task as stated by the Spotify business analyst, she's the *stakeholder*.
 
 *Initially, the user should be able to see a list of their songs and manage them.*
 
 Let's create some User Stories!   
 **Save them to the user_stories.txt file**
 
-### User Story 1
+#### User Story 1
+As a user when I go to the main page I should see a list of Songs.  
+**(Priority: 1, Iteration: 1, Difficulty: 1)**
 
-As a user when I go to the main page I should see a list of Songs. **(Priority: 1, Iteration: 1, Difficulty: 1)**
+#### User Story 2
+As a user when I go to the main page I should see each Song's title.  
+**(Priority: 1, Iteration: 1, Difficulty: 1)**
 
-### User Story 2
-As a user when I go to the main page I should see each Song's title. **(Priority: 1, Iteration: 1, Difficulty: 1)**
-
-### User Story 3
-As a user when I go to the main page I can select a Song to view it's duration, price and artist name. **(Priority: 2, Iteration: 1, Difficulty: 2)**
+#### User Story 3
+As a user when I go to the main page I can select a Song to view it's duration, price and artist name.  
+**(Priority: 2, Iteration: 1, Difficulty: 2)**
 
 I'm not sure what the stakeholder means when she says "manage"? After some discussion with her she says she want's users to be able to **add** and **remove** Songs.
 
 ### User Story 5
-As a user on the main page I should be above to add a Song. **(Priority: 2, Iteration: 1, Difficulty: 2)**
+As a user on the main page I should be above to add a Song.  
+**(Priority: 2, Iteration: 1, Difficulty: 2)**
 
 ### User Story 6
-As a user on the main page I should be able to remove a Song. **(Priority: 2, Iteration: 1, Difficulty: 2)**
+As a user on the main page I should be able to remove a Song.  
+**(Priority: 2, Iteration: 1, Difficulty: 2)**
 
-## Step 2: Find (Domain) Objects.
+## Step 2: Find (Domain) Objects/Models.
 
-Let's repeat the task as stated by stated by the business analyst, he's the *stakeholder*.
+Let's repeat the task as stated by the stakeholder.
 
 *Initially, the user should be able to see a list of their songs and manage them.*
 
-I can see that the nouns in this statement are User, List and Song. We'll create a User object later, when we add site registration and login. 
+I can see that the nouns in this statement are User, SongList/Playlist and Song. We'll create a User object later, when we add site registration and login. 
 
 ### Domain Objects are:
 
@@ -84,7 +88,7 @@ After talking with the stakeholder she mentioned that each Song should have a ti
 
 ### Modelling the Domain Objects.
 
-Let's draw a model of the Domain Objects, Song and Song list on a whiteboard.
+Let's draw a model of the Domain Objects, Song and Playlist on a whiteboard.
 
 Let's find properties and behavior for these objects:
 
@@ -95,12 +99,12 @@ Song:
 * artist propery
 * render method - This will draw a HTML representation of the Song. 
 
-Song List (Playlist): 
+Playlist: 
 * render method - This will draw the list, including all the songs in this playlist.
 * add method - Given a song it will be added to the Playlist.
-* remove method - Given a song it will be remove the song from the Playlist.
+* remove method - Given a song, or song title, it will be remove the song from the Playlist.
 
-Let's take a snapshot of this these domain objects, their properties and their relationship/s.
+Let's take a snapshot of this these domain objects, their properties and their relationship/s. And save them in the repo.
 
 
 ## Lab
@@ -109,20 +113,21 @@ Create User Stories and Domain Objects/Models for a Todo application.
 
 As explained to the developer, *Initially, the user should be able to see a list of their tasks and manage them.* 
 
-Each task should have a title, description, id, (must be unique) and a status(reviewed, in-progress or done).
+Each task should have a title, description, id, (must be unique) and a status (not started, in-progress or done).
 
 A user should be able to add and remove todo items to the todo list. 
 
-Work in groups of two or three to create these users stories. Save these stories in each group member repos as todo_user_stories.txt.
+Work in groups of two or three to create these users stories. Save these stories in each group member's repo as todo_user_stories.txt.
 
-Make sure you assign priority (1-5), difficulty level (1,2, 4 or 8) and which 2 week iteration it will be done in, typically 1
+Make sure you assign priority (1-5), difficulty level (1,2, 4 or 8) and which 2 week iteration it will be done in, typically 1.
 
+Show you domain model diagrams and user stories to an instructor!
 
 ## Step 3: Implementation
 
 Now that we've done a some planning and software design work we're going to write some code and make it happen. 
 
-*Note that many dive into coding to fast. Much teeth gnashing is a special part of hell for those who do. They typically regret coding before structured thinking.*
+*Note that many dive into coding too fast. Much teeth gnashing in a special part of hell for those who do. They typically regret coding before, at least some, structured planning and design.*
 
 ### User Story 1 (Implementation)
 As a user when I go to the main page I should see a list of Songs.
@@ -131,18 +136,9 @@ As a user when I go to the main page I should see a list of Songs.
 
 ```
 <ul id="spotify-songs"></ul>
-
+...
 <script src="js/play_list.js" type="text/javascript"></script>
 ```
-**Add this code to app/js/app.js**
-
-```
-$(document).ready(function(){
-  var songs = Spotify.PlayList.init($('#spotify-songs'));
-  Spotify.PlayList.render(songs);
-});
-```
-
 **Create a file app/js/play_list.js**
 
 ```javascript
@@ -177,6 +173,14 @@ Spotify.PlayList = {
   }
 };
 ```
+**Add this code to app/js/app.js**
+
+```
+$(document).ready(function(){
+  var songs = Spotify.PlayList.init($('#spotify-songs'));
+  Spotify.PlayList.render(songs);
+});
+```
 
 What is that funky code at the top of the file? 
 
@@ -195,11 +199,11 @@ Namespaces dude, namespaces.
 
 ## Namespaces
 
-One of the problems that we see is that the names of global variables inside of your app will have the same name as global variable defined in javascript code or libraries your using.
+One of the problems that we see is that the names of global variables inside of your app will have the same name as a global variable defined in javascript code or libraries your using.
 
 This is called *name collision* and we want to avoid it. 
 
-We want to avoid this by **severely** limiting the number of global variables we create in our app. We're typically create only **one** global variable.
+We want to avoid this by **severely** limiting the number of global variables we create in our app. We're typically create only **one** global variable for our applications.
 
 In the above code we declare **one** global variable, `Spotify`, all the code we write in our app, (functions, object literals, ...), will be prefixed by this **one** global variable that is a object literal.
 
@@ -207,26 +211,100 @@ In the above code we declare **one** global variable, `Spotify`, all the code we
 var Spotify = {} || Spotify; 
 ```
 
-Just says that you should create a global variable that is an object literal UNLESS you already have one defined.
+This just says that you should create a global variable that is an object literal UNLESS you already have one defined. *Typically, you'll break your code into multiple files. Whichever file is loaded first and has this code will create our app's global variable.*
 
-Then we give that Spotify object literal a property, 'PlayList', whose value is another object literal.
+Then we give that Spotify object literal a property, 'PlayList', whose value is another object literal that will define the playlist.
 
 ```
 Spotify.PlayList = { ... };
 ```
 
-We then define methods, 'getSongs, init and render', on the Spotify object literal.
+We then define methods, ('getSongs, init and render'), on the Spotify.PlayList object literal.
 
 ## Big Reminder
 
-Notice that we used an object literal when we need **ONLY ONE** instances of something. 
-
-In this case the app needs **ONLY ONE** Playlist. At least, for now.
+Notice that we used an object literal when we need **ONLY ONE** instances of something. In this case the app needs **ONLY ONE** Playlist. At least, for now.
 
 ## Lab
 
-Create a Todo App. It will have a list of items/tasks. You'll 
-### User Story 2 (Implementation)
+Create a Todo App. It will have a list of items/tasks. You'll implement the todo list user story you created from the last lab.
+
+## Demo
+
+Honestly, I'm not crazy about how we are coding up each Song. We're using a object literals to represent Songs in code. I mean, what if the Song needs behavior that is specifically for that Song? Do I just add a method for that behavior to every single object literal?
+
+Ok, say we do that. Although it seems like a lot of duplication. What happens when we want to change how that method is implemented?
+
+Then we have to change, **every single method for every single song object literal**. Thats just crazy!
+
+Lets create a Song Constructor function that we can use to **instantiate** each Song object.
+
+**Create a file app/js/song.js**
+
+```javascript
+var Spotify = Spotify || {};
+
+// Constructor function for a Song
+Spotify.Song = function(songTitle, songPrice, songDuration, songArtist){
+  this.title = songTitle;
+  this.price = songPrice;
+  this.duration = songDuration;
+  this.artist = songArtist;
+};
+
+Spotify.Song.prototype.render = function($playListElement, id){
+  $playListElement.append('<li id="song-' + id.toString() + '" >' + this.title + '</li>');
+}
+```
+
+And use it in the playlist. **Change app/js/play_list.js**  
+
+```javascript
+...
+getSongs: function(){
+    var songs = [];
+    songs.push(new Spotify.Song("Lost Cause", 183, 1.99,'Beck'));
+    songs.push(new Spotify.Song("Teenage spirit", 243, 1.09,'Nivarna'));
+    songs.push(new Spotify.Song("Whole lotta love", 203, 2.99,'Zeppelin'));
+    songs.push(new Spotify.Song("Mother", 605, 1.49, 'Pink Floyd'));
+    return songs;
+  }
+...
+
+render: function(songs){
+    var id = 1; 
+    songs.forEach(function(song){
+     song.render($playListElement, id);
+     id++;
+    }); 
+  }
+```
+
+**Add this line to the app/index.html**
+
+```
+<script src="js/song.js" type="text/javascript"></script>
+```
+
+Now getSongs will use the Song constructor and the render behavior for a song is implemented as a method on the Song. 
+
+If we need to change the render method we do it **Once**, in one place.
+
+Let's fix this by using Closure and the IIFE Pattern.
+
+
+## Lab
+Make the same changes to your Todo list app as a team. 
+
+Show an instructor your *beautiful DRY code.*
+
+
+### Demo
+
+I'm still not happy about some of this. Specifically, that in the playlist we expose to client code a method, getSongs, that should ONLY be used inside another Playlist method. 
+
+And generating a Song id should be a responsibility of the Song class. Why should the Playlist know that a Song needs an id? It shouldn't.
+
 ## Review: Closures
 
 Create a file app/scripts

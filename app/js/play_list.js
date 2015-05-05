@@ -5,10 +5,10 @@ var Spotify = Spotify || {};
 Spotify.PlayList = {
   getSongs: function(){
     var songs = [];
-    songs.push({title: "Lost Cause", duration: 183, price: 1.99, artist:'Beck'});
-    songs.push({title: "Teenage spirit", duration: 243, price: 1.09, artist:'Nivarna'});
-    songs.push({title: "Whole lotta love", duration: 203, price: 2.99, artist: 'Zeppelin'});
-    songs.push({title: "Mother", duration: 605, price: 1.49, artist:'Pink Floyd'});
+    songs.push(new Spotify.Song("Lost Cause", 183, 1.99,'Beck'));
+    songs.push(new Spotify.Song("Teenage spirit", 243, 1.09,'Nivarna'));
+    songs.push(new Spotify.Song("Whole lotta love", 203, 2.99,'Zeppelin'));
+    songs.push(new Spotify.Song("Mother", 605, 1.49, 'Pink Floyd'));
     return songs;
   },
   // set the HTML Element for the playlist
@@ -22,7 +22,7 @@ Spotify.PlayList = {
   render: function(songs){
     var id = 1; 
     songs.forEach(function(song){
-     $playListElement.append('<li id="song-' + id.toString() + '" >' + song.title + '</li>');
+     song.render($playListElement, id);
      id++;
     }); 
   }
