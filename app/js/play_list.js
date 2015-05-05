@@ -2,7 +2,7 @@
 // It will act as a namespace for our application
 var Spotify = Spotify || {};
 
-Spotify.PlayList = function(){
+Spotify.PlayList = (function(){
   // private songs list 
   var _songs = [];
 
@@ -22,10 +22,8 @@ Spotify.PlayList = function(){
 
   // Render each song into HTML
   function _render(){
-    var id = 1; 
     _songs.forEach(function(song){
-     song.render($playListElement, id);
-     id++;
+     song.render($playListElement);
     }); 
   };
 
@@ -33,4 +31,4 @@ Spotify.PlayList = function(){
     init: _init,
     render: _render
   }
-};
+})();

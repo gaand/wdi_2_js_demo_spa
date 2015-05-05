@@ -1,7 +1,6 @@
 $(document).ready(function(){
-  var pl = Spotify.PlayList()
-  pl.init($('#spotify-songs'));
-  pl.render();
+  Spotify.PlayList.init($('#spotify-songs'));
+  Spotify.PlayList.render();
 });
 
 

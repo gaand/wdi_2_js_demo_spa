@@ -299,21 +299,23 @@ Make the same changes to your Todo list app as a team.
 Show an instructor your *beautiful DRY code.*
 
 
-### Demo
+## Demo
 
-I'm still not happy about some of this. Specifically, that in the playlist we expose to client code a method, getSongs, that should ONLY be used inside another Playlist method. 
+I'm still not happy about some of this. Specifically, that in the playlist we expose to client code contains a method, getSongs, that should ONLY be used inside another Playlist method. 
 
 And generating a Song id should be a responsibility of the Song class. Why should the Playlist know that a Song needs an id? It shouldn't.
 
 ### Encapsulation with Closure and IIFE.
 
-Remember that when we invoke a function that function will have all it's variables and inner functions contained within that function's **scope**. 
+Remember that when we invoke a function that outer function will have all it's variables and inner functions contained within that outer function's **scope**. 
 
 #### Encapsulation
-We can hide, **encapsulate**, that function's variables and inner functions from all client code outside of that function. Another words, we are making these inner functions and variables **private**.
+We can hide, **encapsulate**, that outer function's variables and inner functions from all client code outside of that function. Another words, we are making these inner functions and variables **private**. 
+
+Usually these are **private**, because we don't what to give client code the ability to change my internal implementation.
 
 #### Closure
-We can also return an inner function or variable defined in that function. And that returned inner function still has access to all that function's **scope**. This ability or behavior is called **closure**.
+We can also return inner functions or variables defined inside that outer function. And that returned inner function still has access to all that outer function's **scope**. This ability or behavior is called **closure**.
 
 #### Immediate Invoked Function Expression(IIFE)
 
@@ -358,93 +360,111 @@ Spotify.PlayList = function(){
 };
 ```
 
-Better, know we are keeping our song list and getSongs method private. Clients don't need and can't invoke getSongs. And they should not be able to change how the internal song list is implemented. Good.
+Better, know we are keeping our song list, _songs, and _getSongs method private. Clients don't need and can't invoke getSongs. And they should not be able to change how the internal song list is implemented. Good.
 
 **Change app/js/app.js**
 
+But, we need to change the client code now.
+
 ```javascript
 $(document).ready(function(){
+  // Invoke the function and return the object literal defined
+  // inside the Spotify.Playlist scope.
   var pl = Spotify.PlayList()
+
+  // Invoke playlist methods.
   pl.init($('#spotify-songs'));
   pl.render();
 });
 ```
 
-See no can to getSongs or access to the Playlist internal representation of the song list. Good!
+See, this client code cannot access getSongs the Playlist's internal representation of the song list. Good!
 
-But, wait look at that Spotify.Playlist() thingy. Huh, whats that for? We'll we have to actually invoke the function to get the object representing the playlist. 
+But, wait look at that `Spotify.Playlist()` code. Huh, whats that for? We'll we have to actually invoke the function to get the object literal representing the playlist. 
 
-Let's get around that using an **IIFE**.
+Let's get around and clean this up using an **IIFE**.
 
 It would be nice if we could **Immediate Invoke** the function used to get playlist. Lets try this.
 
-```
+```javascript
 ...
-
-
+// Change.
+// Spotify.PlayList = function(){
+Spotify.PlayList = (function(){
 ...
+// And at the end of the file
+// };
+}();
 ```
 
+Here we wrap the function inside parens and invoke the function immediatly. *Sorry, yes we do need the parens*
 
-## Review: Closures
+Now this is an **Immediately Invoked Function Expression.
 
-Create a file app/scripts
+** Change app/js/app.js**
+
+```
+$(document).ready(function(){
+  Spotify.PlayList.init($('#spotify-songs'));
+  Spotify.PlayList.render();
+});
+```
+
+See no funky `Spotify.Playlist()`. 
+
+**The IIFE is a very common JS Pattern**
+
+
+Finally, lets update the Song as well to use an IIFE.
+
+***Change app/js/song.js**
 
 ```javascript
-// Because this function returns another function that has access to the
-// "private" var i, the returned function is, effectively, "privileged."
-
-function makeCounter() {
-  // `i` is only accessible inside `makeCounter`.
-  var i = 0;
-
-  return function() {
-    console.log( ++i );
-  };
-}
-
-// Note that `counter` and `counter2` each have their own scoped `i`.
-
-var counter = makeCounter();
-counter(); // logs: 1
-counter(); // logs: 2
-
-var counter2 = makeCounter();
-counter2(); // logs: 1
-counter2(); // logs: 2
-
-i; // ReferenceError: i is not defined (it only exists inside makeCounter)
-```
-
-
-### Implement User Story
-**Create a file app/js/song.js**
-
-```javascript
-// This will create one global variable for our app.
-// It will act as a namespace for our application
 var Spotify = Spotify || {};
 
-// Constructor function for a Song
-Spotify.Song = function(songTitle, songPrice, songDuration, songArtist
-  this.title = songTitle;
-  this.price = songPrice;
-  this.duration = songDuration;
-  this.artist = songArtist;
-};
+Spotify.Song = (function(){
+  // set the private id variable.
+  var _id = 1; 
 
+  // Inner Constructor function for a Song
+  function Song(songTitle, songPrice, songDuration, songArtist){
+    this.title = songTitle;
+    this.price = songPrice;
+    this.duration = songDuration;
+    this.artist = songArtist;
+    this.id = _id++;
+  };
+
+  Song.prototype.render = function($playListElement){
+    $playListElement.append('<li id="song-' + this.id.toString() + '" >' + this.title + '</li>');
+  };
+
+  // return the Constructor function.
+  return Song;
+})();
 ```
+
+Noticed how we made the Song id private and used it in the render function. Good, now playlist doesn't need to know about Song ids.
+
+**Change app/js/play_list.js**
+
+```javascript
+...
+ function _render(){
+    _songs.forEach(function(song){
+     song.render($playListElement);
+    }); 
+  };
+...  
+```
+
+No id in the playlist render function.
+
 ## Bonus (Optional Section)
 
-If you're looking for extra challenge or practice once you've completed the above, try to...
-
-## Notes
-
-Gotcha's and extra information
+Create the Playlist add and remove methods. 
 
 ## Additional Resources
-
-List additional related resources such as videos, blog posts and official documentation.
 
 - Item 1
 - Item 2

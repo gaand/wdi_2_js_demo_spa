@@ -1,13 +1,22 @@
 var Spotify = Spotify || {};
 
-// Constructor function for a Song
-Spotify.Song = function(songTitle, songPrice, songDuration, songArtist){
-  this.title = songTitle;
-  this.price = songPrice;
-  this.duration = songDuration;
-  this.artist = songArtist;
-};
+Spotify.Song = (function(){
+  // set the private id variable.
+  var _id = 1; 
 
-Spotify.Song.prototype.render = function($playListElement, id){
-  $playListElement.append('<li id="song-' + id.toString() + '" >' + this.title + '</li>');
-}
+  // Inner Constructor function for a Song
+  function Song(songTitle, songPrice, songDuration, songArtist){
+    this.title = songTitle;
+    this.price = songPrice;
+    this.duration = songDuration;
+    this.artist = songArtist;
+    this.id = _id++;
+  };
+
+  Song.prototype.render = function($playListElement){
+    $playListElement.append('<li id="song-' + this.id.toString() + '" >' + this.title + '</li>');
+  };
+
+  // return the Constructor function.
+  return Song;
+})();
