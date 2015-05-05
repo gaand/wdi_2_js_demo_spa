@@ -11,16 +11,16 @@
 ## Instructions
 
 1. Fork and clone.
-2. `npm install`.   
+2. `npm install`.
 	 *This will install javascript packages needed during development like grunt, jasmine, etc.*
-3. `bower install`.  
+3. `bower install`.
 	*This will install javascript packages and libraries needed for the client side code, that is, in the page itself. This app will need jquery.*
 
 ## Overview
 
-As a Spotify employee I'm tasked with the implementation of a Song Playlist. This will run in the browser and at some point in time, *in the future*, it will allow Spotify users the ability to manage, organize and play their songs. 
+As a Spotify employee I'm tasked with the implementation of a Song Playlist. This will run in the browser and at some point in time, *in the future*, it will allow Spotify users the ability to manage, organize and play their songs.
 
-As explained to the developer, *Initially, the user should be able to see a list of their songs and manage them.* 
+As explained to the developer, *Initially, the user should be able to see a list of their songs and manage them.*
 
 This is just a first step in a the construction of a larger project so we're **not** going to think about user registration, login or even sync'ng the list with the Spotify backend servers. *Lot's of stuff we're not doing yet.*
 
@@ -29,9 +29,9 @@ This is just a first step in a the construction of a larger project so we're **n
 
 User Stories are **small** focused descriptions of functionality that can be done by a developer in a small amount of time.
 
-They are a task, and we work with **stakeholders**, typically a business analyst or end user, to create these stories/tasks. Each story describes: 
+They are a task, and we work with **stakeholders**, typically a business analyst or end user, to create these stories/tasks. Each story describes:
 
-* How important a task is. _It's **priority** relative to other stories._  **Lets set Priority to be from 1 to 5. 1 is highest priority**
+* How important a task is. _It's **priority** relative to other stories._  **Lets set Priority to be from 1 to 5. 1 is the highest priority**
 
 * When the task is to be done. We need to determine what is this task's **dependencies**. Another words, what needs to be completed before we can complete this task. What does this story depend on. **Let break our work into 2 week iterations. Iteration 1 will have all the high priority stories and stories that other stories are depending on.**
 
@@ -46,29 +46,29 @@ Let's repeat the task as stated by the Spotify business analyst, she's the *stak
 
 *Initially, the user should be able to see a list of their songs and manage them.*
 
-Let's create some User Stories!   
+Let's create some User Stories!
 **Save them to the user_stories.txt file**
 
 #### User Story 1
-As a user when I go to the main page I should see a list of Songs.  
+As a user when I go to the main page I should see a list of Songs.
 **(Priority: 1, Iteration: 1, Difficulty: 1)**
 
 #### User Story 2
-As a user when I go to the main page I should see each Song's title.  
+As a user when I go to the main page I should see each Song's title.
 **(Priority: 1, Iteration: 1, Difficulty: 1)**
 
 #### User Story 3
-As a user when I go to the main page I can select a Song to view it's duration, price and artist name.  
+As a user when I go to the main page I can select a Song to view it's duration, price and artist name.
 **(Priority: 2, Iteration: 1, Difficulty: 2)**
 
 I'm not sure what the stakeholder means when she says "manage"? After some discussion with her she says she want's users to be able to **add** and **remove** Songs.
 
 ### User Story 5
-As a user on the main page I should be able to add a Song to the Playlist.  
+As a user on the main page I should be able to add a Song to the Playlist.
 **(Priority: 2, Iteration: 1, Difficulty: 2)**
 
 ### User Story 6
-As a user on the main page I should be able to remove a Song from the Playlist.  
+As a user on the main page I should be able to remove a Song from the Playlist.
 **(Priority: 2, Iteration: 1, Difficulty: 2)**
 
 ## Step 2: Find Domain Objects/Models.
@@ -79,7 +79,7 @@ Let's repeat the task as stated by the stakeholder.
 
 *Initially, the user should be able to see a list of their songs and manage them.*
 
-I can see that the nouns in this statement are User, SongList/Playlist and Song. We'll create a User object later, when we add site registration and login. 
+I can see that the nouns in this statement are User, SongList/Playlist and Song. We'll create a User object later, when we add site registration and login.
 
 ### Domain Objects are:
 
@@ -92,32 +92,32 @@ After talking with the stakeholder she mentioned that each Song should have a ti
 
 Let's draw a model of the Domain Objects, Song and Playlist on a whiteboard. Let's model properties and behavior for these objects:
 
-Song: 
+Song:
 
 * title property
 * duration property
 * price property
 * artist propery
-* render method - This will draw a HTML representation of the Song. 
+* render method - This will draw a HTML representation of the Song.
 
-Playlist: 
+Playlist:
 
 * render method - This will draw the list, including all the songs in this playlist.
 * add method - Given a song it will be added to the Playlist.
-* remove method - Given a song, or song title, it will be remove the song from the Playlist.
+* remove method - Given a song, or song title, it will remove the song from the Playlist.
 
-Let's take a snapshot of this these domain objects, their properties and their relationship/s. And save them in the repo.
+Let's take a snapshot of these domain objects, their properties and their relationships. And save them in the repo.
 
 
 ## Lab
 
-Create User Stories and Domain Objects/Models for a Todo application. 
+Create User Stories and Domain Objects/Models for a Todo application.
 
-As explained to the developer, *Initially, the user should be able to see a list of their tasks and manage them.* 
+As explained to the developer, *Initially, the user should be able to see a list of their tasks and manage them.*
 
 Each task should have a title, description, id, (must be unique) and a status (not started, in-progress or done).
 
-A user should be able to add and remove todo items to the todo list. 
+A user should be able to add items to, and remove items from, the todo list.
 
 Work in groups of two or three to create these users stories. Save these stories in each group member's repo as todo_user_stories.txt.
 
@@ -127,7 +127,7 @@ Show you domain model diagrams and user stories to an instructor!
 
 ## Step 3: Implementation
 
-Now that we've done a some planning and software design work we're going to write some code and make it happen. 
+Now that we've done a some planning and software design work we're going to write some code and make it happen.
 
 *Note that many dive into coding too fast. Much teeth gnashing in a special part of hell for those who do. They typically regret coding before, at least some, structured planning and design.*
 
@@ -136,7 +136,7 @@ As a user when I go to the main page I should see a list of Songs.
 
 **Add these lines to the app/index.html**
 
-```
+```html
 <ul id="spotify-songs"></ul>
 ...
 <script src="js/play_list.js" type="text/javascript"></script>
@@ -162,16 +162,16 @@ Spotify.PlayList = {
   init: function(appPlayListElement){
     $playListElement = appPlayListElement;
 
-    // Will eventually be a remote call to get songs from the server 
+    // Will eventually be a remote call to get songs from the server
     return this.getSongs();
   },
   // Render each song into HTML
   render: function(songs){
-    var id = 1; 
+    var id = 1;
     songs.forEach(function(song){
      $playListElement.append('<li id="song-' + id.toString() + '" >' + song.title + '</li>');
      id++;
-    }); 
+    });
   }
 };
 ```
@@ -184,13 +184,13 @@ $(document).ready(function(){
 });
 ```
 
-**Run this app on the command line.**  
+**Run this app on the command line.**
 
-```
-grunt serve
+```bash
+$ grunt serve
 ```
 
-What is that funky code at the top of the file? 
+What is that funky code at the top of the file?
 
 ```javascript
 var Spotify = Spotify || {};
@@ -200,7 +200,7 @@ Spotify.PlayList = {
   ...
   }
   ...
-};  
+};
 ```
 
 Namespaces dude, namespaces.
@@ -209,21 +209,21 @@ Namespaces dude, namespaces.
 
 One of the problems that we see is that the names of global variables inside of your app will have the same name as a global variable defined in javascript code or libraries your using.
 
-This is called *name collision* and we want to avoid it. 
+This is called *name collision* and we want to avoid it.
 
 We want to avoid this by **severely** limiting the number of global variables we create in our app. We're typically going to create only **one** global variable for our applications.
 
-In the above code we declare **one** global variable, `Spotify`, all the code we write in our app, (functions, object literals, ...), will be prefixed by this **one** global variable that is a object literal.
+In the above code we declare **one** global variable, `Spotify`, all the code we write in our app, (functions, object literals, ...), will be prefixed by this **one** global variable that is an object literal.
 
-```
-var Spotify = {} || Spotify; 
+```javascript
+var Spotify = {} || Spotify;
 ```
 
 This just says that you should create a global variable that is an object literal UNLESS you already have one defined. *Typically, you'll break your code into multiple files. Whichever file is loaded first and has this code will create our app's global variable.*
 
-Then we give that Spotify global object literal a property, 'PlayList', whose value is another object literal that will use to define the playlist.
+Then we give that Spotify global object literal a property, 'PlayList', whose value is another object literal that we will use to define the playlist.
 
-```
+```javascript
 Spotify.PlayList = { ... };
 ```
 
@@ -265,7 +265,7 @@ Spotify.Song.prototype.render = function($playListElement, id){
 }
 ```
 
-And use it in the playlist. **Change app/js/play_list.js**  
+And use it in the playlist. **Change app/js/play_list.js**
 
 ```javascript
 ...
@@ -280,11 +280,11 @@ getSongs: function(){
 ...
 
 render: function(songs){
-    var id = 1; 
+    var id = 1;
     songs.forEach(function(song){
      song.render($playListElement, id);
      id++;
-    }); 
+    });
   }
 ```
 
@@ -294,19 +294,19 @@ render: function(songs){
 <script src="js/song.js" type="text/javascript"></script>
 ```
 
-Now getSongs will use the Song constructor and the render behavior for a song is implemented as a method on the Song. 
+Now getSongs will use the Song constructor and the render behavior for a song is implemented as a method on the Song.
 
 If we need to change the render method we do it **Once**, in one place.
 
 ## Lab
-Make the same changes to your Todo list app as a team. 
+Make the same changes to your Todo list app as a team.
 
 Show an instructor your *beautiful DRY code.*
 
 
 ## Demo
 
-I'm still not happy about some of this. Specifically, we expose a playlist method, getSongs, to client code. This method is only used by another playlist method. So lets hide or make this getSongs method **private**. 
+I'm still not happy about some of this. Specifically, we expose a playlist method, getSongs, to client code. This method is only used by another playlist method. So lets hide or make this getSongs method **private**.
 
 We also expose the internal array of songs used in a playlist. This should also be hidden away from the client code. As an implementer I should be able to change this in my code without worrying if some client code depends on it being an array.
 
@@ -314,15 +314,15 @@ And generating a Song id should be a responsibility of the Song class. Why shoul
 
 ### Encapsulation with Closure and IIFE.
 
-Remember that when we invoke a function that outer function will have all it's variables and inner functions contained within that outer function's **scope**. 
+Remember that when we invoke an outer function that it will have all it's variables and inner functions contained within that outer function's **scope**.
 
 #### Encapsulation
-We can hide, **encapsulate**, that outer function's variables and inner functions from all client code outside of that function. Another words, we should be making these inner functions and variables **private**. 
+We can hide, **encapsulate**, that outer function's variables and inner functions from all client code outside of that function. In other words, we'll be making these inner functions and variables **private**.
 
-Also, these are **private** because we don't what to give client code the ability to change my internal implementation of a song list.
+Also, we make them **private** because we don't want to give client code the ability to change our internal implementation of a song list.
 
 #### Closure
-We can also return inner functions or variables defined inside that outer function. And that returned inner function still has access to all that outer function's **scope**. This ability or behavior is called **closure**.
+We can also return inner functions or variables defined inside that outer function. And that returned inner function still has access to all of that outer function's **scope**. This ability or behavior is called **closure**.
 
 #### Immediate Invoked Function Expression(IIFE)
 
@@ -334,7 +334,7 @@ Let's look at how an IIFE can implement **encapsulation** and **closure**.
 var Spotify = Spotify || {};
 
 Spotify.PlayList = function(){
-  // private songs list 
+  // private songs list
   var _songs = [];
 
   // private method, only used by _init method
@@ -352,12 +352,12 @@ Spotify.PlayList = function(){
 
   // Render each song into HTML
   function _render(){
-    var id = 1; 
+    var id = 1;
     // song list is now private.
     _songs.forEach(function(song){
      song.render($playListElement, id);
      id++;
-    }); 
+    });
   };
 
   return {
@@ -387,7 +387,7 @@ $(document).ready(function(){
 
 See, this client code cannot access getSongs the Playlist's internal representation of the song list. Good!
 
-But, wait look at that `Spotify.Playlist()` code. Huh, whats that for? We'll we have to actually invoke the function to get the object literal representing the playlist. 
+But, wait look at that `Spotify.Playlist()` code. Huh, whats that for? We'll we have to actually invoke the function to get the object literal representing the playlist.
 
 Let's get around this and clean this up using an **IIFE**.
 
@@ -406,7 +406,7 @@ Spotify.PlayList = (function(){
 
 Here we wrap the function inside parens and invoke the function immediatly. *Sorry, yes we do need the parens*
 
-Now this is an **Immediately Invoked Function Expression(IIFE)**.  
+Now this is an **Immediately Invoked Function Expression(IIFE)**.
 
 **Change app/js/app.js**
 
@@ -417,7 +417,7 @@ $(document).ready(function(){
 });
 ```
 
-See no funky `Spotify.Playlist()`. 
+See no funky `Spotify.Playlist()`.
 
 **The IIFE is a very common JS Pattern**
 
@@ -431,7 +431,7 @@ var Spotify = Spotify || {};
 
 Spotify.Song = (function(){
   // set the private id variable.
-  var _id = 1; 
+  var _id = 1;
 
   // Inner Constructor function for a Song
   function Song(songTitle, songPrice, songDuration, songArtist){
@@ -460,21 +460,21 @@ Noticed how we made the Song id private and used it in the render function. Good
  function _render(){
     _songs.forEach(function(song){
      song.render($playListElement);
-    }); 
+    });
   };
-...  
+...
 ```
 
 No id in the playlist render function.
 
-## Lab 
+## Lab
 
 Update your Todo list to use an IIFE as we have done above.
 
 
 ## Bonus (Optional Section)
 
-Create the Playlist add and remove methods. Notice that we'll need to create a form with a couple of input fields for the Song properites. 
+Create the Playlist add and remove methods. Notice that we'll need to create a form with a couple of input fields for the Song properites.
 
 #### Implement User Story 5, (Add a song to the playlist)
 We'll need a button that has a click handler, perhaps a method on the playlist called add, that will read the Song form and create a new Song instance then add this new song object to the playlist internal _songs array.
