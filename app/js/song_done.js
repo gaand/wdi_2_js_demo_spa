@@ -1,3 +1,6 @@
+/* global Spotify*/
+'use strict';
+
 var Spotify = Spotify || {};
 
 // Constructor function for a Song
@@ -9,5 +12,5 @@ Spotify.Song = function(songTitle, songPrice, songDuration, songArtist){
 };
 
 Spotify.Song.prototype.render = function($playListElement){
-  $playListElement.append("<li id='song-'" + this.id + " >" + this.title + "</li>");
-}
+  $playListElement.append('<li id="song-"' + this.id + '">' + this.title + '</li>');
+};

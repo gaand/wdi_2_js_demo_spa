@@ -1,3 +1,5 @@
+'use strict';
+
 // Because this function returns another function that has access to the
 // "private" var i, the returned function is, effectively, "privileged."
 

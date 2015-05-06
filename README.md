@@ -144,6 +144,7 @@ As a user when I go to the main page I should see a list of Songs.
 **Create a file app/js/play_list.js**
 
 ```javascript
+/* global Spotify */
 
 // This will create one global variable for our app.
 // It will act as a namespace for our application
@@ -152,15 +153,15 @@ var Spotify = Spotify || {};
 Spotify.PlayList = {
   getSongs: function(){
     var songs = [];
-    songs.push({title: "Lost Cause", duration: 183, price: 1.99, artist:'Beck'});
-    songs.push({title: "Teenage spirit", duration: 243, price: 1.09, artist:'Nivarna'});
-    songs.push({title: "Whole lotta love", duration: 203, price: 2.99, artist: 'Zeppelin'});
-    songs.push({title: "Mother", duration: 605, price: 1.49, artist:'Pink Floyd'});
+    songs.push({title: 'Lost Cause', duration: 183, price: 1.99, artist:'Beck'});
+    songs.push({title: 'Teenage spirit', duration: 243, price: 1.09, artist:'Nivarna'});
+    songs.push({title: 'Whole lotta love', duration: 203, price: 2.99, artist: 'Zeppelin'});
+    songs.push({title: 'Mother', duration: 605, price: 1.49, artist:'Pink Floyd'});
     return songs;
   },
   // set the HTML Element for the playlist
   init: function(appPlayListElement){
-    $playListElement = appPlayListElement;
+    this.$playListElement = appPlayListElement;
 
     // Will eventually be a remote call to get songs from the server
     return this.getSongs();
@@ -169,7 +170,7 @@ Spotify.PlayList = {
   render: function(songs){
     var id = 1;
     songs.forEach(function(song){
-     $playListElement.append('<li id="song-' + id.toString() + '" >' + song.title + '</li>');
+     this.$playListElement.append('<li id="song-' + id.toString() + '" >' + song.title + '</li>');
      id++;
     });
   }
@@ -178,6 +179,8 @@ Spotify.PlayList = {
 **Add this code to app/js/app.js**
 
 ```javascript
+/* global Spotify, $ */
+
 $(document).ready(function(){
   var songs = Spotify.PlayList.init($('#spotify-songs'));
   Spotify.PlayList.render(songs);
@@ -193,6 +196,7 @@ $ grunt serve
 What is that funky code at the top of the file?
 
 ```javascript
+/* global Spotify */
 var Spotify = Spotify || {};
 
 Spotify.PlayList = {
@@ -250,6 +254,8 @@ Lets create a Song Constructor function that we can use to **instantiate** each 
 **Create a file app/js/song.js**
 
 ```javascript
+/* global Spotify */
+
 var Spotify = Spotify || {};
 
 // Constructor function for a Song
@@ -261,7 +267,7 @@ Spotify.Song = function(songTitle, songPrice, songDuration, songArtist){
 };
 
 Spotify.Song.prototype.render = function($playListElement, id){
-  $playListElement.append('<li id="song-' + id.toString() + '" >' + this.title + '</li>');
+  this.$playListElement.append('<li id="song-' + id.toString() + '" >' + this.title + '</li>');
 }
 ```
 
@@ -271,10 +277,10 @@ And use it in the playlist. **Change app/js/play_list.js**
 ...
 getSongs: function(){
     var songs = [];
-    songs.push(new Spotify.Song("Lost Cause", 183, 1.99,'Beck'));
-    songs.push(new Spotify.Song("Teenage spirit", 243, 1.09,'Nivarna'));
-    songs.push(new Spotify.Song("Whole lotta love", 203, 2.99,'Zeppelin'));
-    songs.push(new Spotify.Song("Mother", 605, 1.49, 'Pink Floyd'));
+    songs.push(new Spotify.Song('Lost Cause', 183, 1.99,'Beck'));
+    songs.push(new Spotify.Song('Teenage spirit', 243, 1.09,'Nivarna'));
+    songs.push(new Spotify.Song('Whole lotta love', 203, 2.99,'Zeppelin'));
+    songs.push(new Spotify.Song('Mother', 605, 1.49, 'Pink Floyd'));
     return songs;
   }
 ...
@@ -282,7 +288,7 @@ getSongs: function(){
 render: function(songs){
     var id = 1;
     songs.forEach(function(song){
-     song.render($playListElement, id);
+     song.render(this.$playListElement, id);
      id++;
     });
   }
@@ -331,22 +337,24 @@ Let's look at how an IIFE can implement **encapsulation** and **closure**.
 **Change app/js/play_list.js**
 
 ```javascript
+/* global Spotify */
 var Spotify = Spotify || {};
 
 Spotify.PlayList = function(){
   // private songs list
-  var _songs = [];
+  var _songs = [],
+  _$playListElement;
 
   // private method, only used by _init method
   function _getSongs(){
-    _songs.push(new Spotify.Song("Lost Cause", 183, 1.99,'Beck'));
-    _songs.push(new Spotify.Song("Teenage spirit", 243, 1.09,'Nivarna'));
+    _songs.push(new Spotify.Song('Lost Cause', 183, 1.99,'Beck'));
+    _songs.push(new Spotify.Song('Teenage spirit', 243, 1.09,'Nivarna'));
     _songs.push(new Spotify.Song("Whole lotta love", 203, 2.99,'Zeppelin'));
     _songs.push(new Spotify.Song("Mother", 605, 1.49, 'Pink Floyd'));
   };
 
   function _init(appPlayListElement){
-    $playListElement = appPlayListElement;
+    _$playListElement = appPlayListElement;
     _getSongs(); // call private _getSongs method
   };
 
@@ -355,7 +363,7 @@ Spotify.PlayList = function(){
     var id = 1;
     // song list is now private.
     _songs.forEach(function(song){
-     song.render($playListElement, id);
+     song.render(_$playListElement, id);
      id++;
     });
   };
@@ -374,6 +382,7 @@ Better, now we are keeping our song list, _songs, and _getSongs method private. 
 But, we need to change the client code now.
 
 ```javascript
+/* global Spotify */
 $(document).ready(function(){
   // Invoke the function and return the object literal defined
   // inside the Spotify.Playlist scope.
@@ -411,6 +420,7 @@ Now this is an **Immediately Invoked Function Expression(IIFE)**.
 **Change app/js/app.js**
 
 ```
+/* global Spotify */
 $(document).ready(function(){
   Spotify.PlayList.init($('#spotify-songs'));
   Spotify.PlayList.render();
@@ -427,6 +437,7 @@ Finally, lets update the Song as well to use an IIFE.
 **Change app/js/song.js**
 
 ```javascript
+/* global Spotify */
 var Spotify = Spotify || {};
 
 Spotify.Song = (function(){
